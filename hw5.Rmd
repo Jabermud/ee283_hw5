@@ -1,0 +1,233 @@
+---
+title: "ee283_HW5"
+author: "Jose Bermudez"
+date: "2/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## HW5: a step by step plotting walkthrough using R
+
+### base R
+
+
+```{r}
+
+# plot the sine function using `plot()`
+
+plot(sin)
+```
+```{r}
+
+# add X and Y labels
+
+plot(sin, xlab = expression(sigma), ylab = expression(tau))
+```
+
+```{r}
+
+# change x-label to sigma^2
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau))
+```
+
+```{r}
+
+# change the color of the line from black -> red.
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red")
+```
+
+```{r}
+
+# change the line thickness from deafult value=1 to 3 times its default value lwd = 3.
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3)
+```
+```{r}
+
+# change the line style from the default solid line with value=1 to a 'dot-dash' type of line with a lty = 4.
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4)
+
+```
+```{r}
+
+# use `bquote` to pass a variable value into the plot's title. Uppercase gamma = variable value (7)
+
+# set variable value
+var_annotation <- 7 
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+
+```
+```{r}
+
+# use `bquote` to pass a variable value into the plot's title. Uppercase gamma = variable value (7)
+
+# set variable value
+var_annotation <- 7 
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+text(x=0.1, y=0.4, bquote(Gamma~"="~.(var_annotation)))
+
+```
+
+```{r}
+
+# use `bquote` to pass a variable value into the plot's title. Uppercase gamma = variable value (7)
+
+# set variable value
+var_annotation <- 7 
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+text(x=0.1, y=0.4, bquote(Gamma~"="~.(var_annotation)))
+
+```
+
+```{r}
+
+# use `bquote` to pass a variable value into the plot's title. Uppercase gamma = variable value (7)
+
+# set variable value
+var_annotation <- 7 
+
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+text(x=0.1, y=0.4, bquote(Gamma~"="~.(var_annotation)))
+
+```
+
+```{r}
+
+# save my sine plot to a pdf file with the specified dimensions.
+
+pdf(file = "hw5_plot_sine.pdf", pointsize = 18, width = 10, height = 10)
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+text(x=0.1, y=0.4, bquote(Gamma~"="~.(var_annotation)))
+
+```
+
+```{r}
+
+# save my sine plot to a tiff file with the specified dimensions.
+
+tiff(file = "hw5_plot_sine.tiff", pointsize = 18, width = 10, height = 10, res = 300, units = "in")
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+text(x=0.1, y=0.4, bquote(Gamma~"="~.(var_annotation)))
+
+```
+
+```{r}
+
+# save my sine plot to a .png file with the first set of specified dimensions, res =72.
+
+png(file = "hw5_plot1_sine.png", pointsize = 18, width = 10, height = 10, res = 72, units = "in")
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+text(x=0.1, y=0.4, bquote(Gamma~"="~.(var_annotation)))
+
+
+```
+
+```{r}
+
+# save my sine plot to a .png file with the second set of specified dimensions, res = 300.
+
+png(file = "hw5_plot2_sine.png", pointsize = 18, width = 10, height = 10, res = 300, units = "in")
+plot(sin, xlab = expression(sigma[italic("s")]^2), ylab = expression(tau), col="red", lwd=3, lty = 4,
+     main=bquote(Gamma~"="~.(var_annotation)))
+text(x=0.1, y=0.4, bquote(Gamma~"="~.(var_annotation)))
+
+
+```
+
+### R/ggplot2
+
+```{R}
+
+# original graph
+
+library(ggplot2)
+data(mtcars)
+p = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point()
+p
+```
+
+
+```{R}
+library(ggplot2)
+
+data(mtcars)
+
+p_left = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point(color= "red", size = 3, shape=1) + 
+  
+  annotate("text", x=5, 20, label = bquote(Gamma~"="~.(var_annotation))) +
+
+  labs(title = bquote(Gamma~"="~.(var_annotation)), x= expression(sigma[italic("s")]^2), y= expression(tau))
+
+p_left
+```
+
+```{R}
+
+# Save my ggplot2 file in the different file formats specified in the assignment.
+
+ggsave("hw5_ggplot_mtcars.pdf", plot= p_left, device = "pdf", width = 10, height = 10, units = "in")
+ggsave("hw5_ggplot_mtcars.tiff", plot= p_left, device = "tiff", width = 10, height = 10, units = "in")
+ggsave("hw5_ggplot1_mtcars.png", plot= p_left, device = "png", width = 10, height = 10, units = "in", dpi = 72)
+ggsave("hw5_ggplot2_mtcars.png", plot= p_left, device = "png", width = 10, height = 10, units = "in", dpi = 300)
+
+```
+
+```{R}
+
+#make a second graph in a second color for side-by-side comparison using ggpubr tools
+
+library(ggplot2)
+
+data(mtcars)
+
+p_right = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point(color= "blue", size = 3, shape=2) + 
+  
+  annotate("text", x=5, 20, label = bquote(Gamma~"="~.(var_annotation))) +
+
+  labs(title = bquote(Gamma~"="~.(var_annotation)), x= expression(sigma[italic("s")]^2), y= expression(tau))
+
+p_right
+```
+
+```{R}
+
+# use ggpubr library of tools to put 2 graphs side by side.
+
+library("ggpubr")
+
+ggarrange(p_left , p_right)
+
+```
+
+```{R}
+
+# use ggpubr library of tools to arrange multiple plots next to each other.  
+
+library("ggpubr")
+
+p_grid <- ggarrange(p_left, p_right, p_right, p_left, ncol = 2, nrow = 2)
+
+p_grid
+
+ggsave("hw5_ggplot_grid.png", plot= p_grid, device = "png", width = 10, height = 10, units = "in", dpi = 300)
+
+```
+
+
+
